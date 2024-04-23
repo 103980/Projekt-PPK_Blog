@@ -1,9 +1,14 @@
+using Blog.Web.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorPages();
+builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 
-var app = builder.Build();
+builder.Services.AddDbContext<BlogDbContext>(Options => Options.UseSqlServer(builder.Configuration.GetConnectionString("BlogDbConnectionString")));
+
+var app = builder.Build(); 
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

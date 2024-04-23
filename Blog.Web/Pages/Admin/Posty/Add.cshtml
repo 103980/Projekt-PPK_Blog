@@ -1,0 +1,71 @@
+﻿@page
+@model Blog.Web.Pages.Admin.Posty.AddModel
+@{
+}
+
+
+<div class="bg-primary bg-opacity-10 py-3">
+    <div class="container">
+        <h1>Dodaj posty</h1>
+    </div>
+</div>
+
+<div>
+    <div class="container">
+        <form method="post">
+            <div class="mb-3">
+                <label for="heading" class="form-label">Nagłówek</label>
+                <input type="text" class="form-control" id="heading" asp-for="AddBlogPostRequest.Heading">
+            </div>
+
+            <div class="mb-3">
+                <label for="pageTitle" class="form-label">Tytuł Strony</label>
+                <input type="text" class="form-control" id="pageTitle" asp-for="AddBlogPostRequest.PageTitle">
+            </div>
+
+            <div class="mb-3">
+                <label for="content" class="form-label">Treść</label>
+                <textarea class="form-control" id="content" asp-for="AddBlogPostRequest.Content"></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="shortDescription" class="form-label">Krótki opis</label>
+                <input type="text" class="form-control" id="shortDescription" asp-for="AddBlogPostRequest.ShortDescription">
+            </div>
+
+            <div class="mb-3">
+                <label for="featuredImageURL" class="form-label"> Link do obrazu</label>
+                <input type="text" class="form-control" id="featuredImageURL" asp-for="AddBlogPostRequest.FeaturedImageUrl">
+            </div>
+
+            <div class="mb-3">
+                <label for="urlHandle" class="form-label">Url Handle</label>
+                <input type="text" class="form-control" id="urlHandle" asp-for="AddBlogPostRequest.UrlHandle">
+            </div>
+
+            <div class="mb-3">
+                <label for="publishedDate" class="form-label">Data dodania</label>
+                <input type="date" class="form-control" id="publishedDate" asp-for="AddBlogPostRequest.PublishedDate">
+            </div>
+
+            <div class="mb-3">
+                <label for="author" class="form-label">Autor</label>
+                <input type="text" class="form-control" id="author" asp-for="AddBlogPostRequest.Author">
+            </div>
+
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" value="" id="isVisible" asp-for="AddBlogPostRequest.Visible">
+                <label class="form-check-label" for="isVisible">
+                    Widoczny?
+                </label>
+            </div>
+
+            <div class="mb-3">
+                <button class="btn btn-primary" type="submit">Gotowe!</button>
+            </div>
+
+
+
+        </form>
+    </div>
+</div>
