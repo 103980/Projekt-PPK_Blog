@@ -9,6 +9,26 @@
     </div>
 </div>
 
+
+<partial name="_Alert">
+
+
+@* @{
+    var messageDescription = (string)ViewData["MessageDesc"];
+}
+
+@if (!string.IsNullOrWhiteSpace(messageDescription))
+{
+    <div class="container mb-5">
+        <div class="alert alert-success alert-dismissible fade show mb-3" role="alert">
+            @Html.Raw(messageDescription)
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+} *@
+
+@if (Model.BlogPostList !=null && Model.BlogPostList.Any())
+{
 <div class="container">
     <table class="table">
         <thead>
@@ -30,4 +50,11 @@
         </tbody>
     </table>
 
-</div>
+    </div>
+}
+else
+{
+    <div class="container">
+        <p>Nie ma jeszcze żadnych Postów :( </p>
+    </div>
+}

@@ -1,61 +1,77 @@
 using Blog.Web.Data;
 using Blog.Web.Models.Domain;
+using Blog.Web.Models.ViewModels;
+using Blog.Web.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Text.Json;
 
 namespace Blog.Web.Pages.Admin.Posty
 {
     public class EditModel : PageModel
     {
-        private readonly BlogDbContext blogDbContext;
-
+        private readonly IBlogPostRepository blogPostRepository;
 
         [BindProperty]
         public BlogPost BlogPost { get; set; }
 
-        public EditModel(BlogDbContext blogDbContext)
+        public EditModel(IBlogPostRepository blogPostRepository)
         {
-            this.blogDbContext = blogDbContext;
+            this.blogPostRepository = blogPostRepository;
         }
 
-        public void OnGet(Guid id)
+        public async Task OnGet(Guid id)
         {
-            BlogPost = blogDbContext.BlogPosts.Find(id);
+            BlogPost = await blogPostRepository.GetAsync(id);
 
         }
 
-        public IActionResult OnPostEdit() 
+        public async Task <IActionResult> OnPostEdit() 
         {
-           var existingBlogPost =  blogDbContext.BlogPosts.Find(BlogPost.Id);
-
-            if (existingBlogPost != null)
+            try
             {
-                existingBlogPost.Heading = BlogPost.Heading;
-                existingBlogPost.PageTitle = BlogPost.PageTitle;
-                existingBlogPost.Content = BlogPost.Content;
-                existingBlogPost.ShortDescription = BlogPost.ShortDescription;
-                existingBlogPost.FeaturedImageUrl = BlogPost.FeaturedImageUrl;
-                existingBlogPost.UrlHandle = BlogPost.UrlHandle;
-                existingBlogPost.PublishedDate = BlogPost.PublishedDate;
-                existingBlogPost.Author = BlogPost.Author;
-                existingBlogPost.Visible = BlogPost.Visible;
+                throw new Exception();
+
+                await blogPostRepository.UpdateAsync(BlogPost);
+
+                ViewData["Alert"] = new Alerts
+                {
+                    Message = "Post zosta³ poprawnie zmodyfikowany!",
+                    Type = Enums.AlertType.Success
+                };
+            }
+            catch (Exception ex)
+            {
+                ViewData["Alert"] = new Alerts
+                {
+                    Message = "Post nie zosta³ poprawnie zmodyfikowany!",
+                    Type = Enums.AlertType.Error
+                };
+
             }
 
-            blogDbContext.SaveChanges();
-            return RedirectToPage("/Admin/Posty/List");
+            return Page();
+            //return RedirectToPage("/Admin/Posty/List");
         }
 
-        public IActionResult OnPostDelete()
+        public async Task<IActionResult> OnPostDelete()
         {
-            var existingBlog = blogDbContext.BlogPosts.Find(BlogPost.Id);
-
-            if (existingBlog != null)
+            var deleted = await blogPostRepository.DeleteAsync(BlogPost.Id);
+            if (deleted)
             {
-                blogDbContext.BlogPosts.Remove(existingBlog);
-                blogDbContext.SaveChanges();
+
+                var alert = new Alerts
+                {
+                    Type = Enums.AlertType.Success,
+                    Message = "Poprawnie usuniêto post!"
+                };
+
+                TempData["Alert"] = JsonSerializer.Serialize(alert);
 
                 return RedirectToPage("/Admin/Posty/List");
+
             }
+            
             return Page();
         }
     }

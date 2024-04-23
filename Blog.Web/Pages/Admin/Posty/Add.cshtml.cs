@@ -1,27 +1,30 @@
 using Blog.Web.Data;
 using Blog.Web.Models.Domain;
 using Blog.Web.Models.ViewModels;
+using Blog.Web.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Text.Json;
 
 namespace Blog.Web.Pages.Admin.Posty
 {
     public class AddModel : PageModel
     {
-        private readonly BlogDbContext blogDbContext;
+        private readonly IBlogPostRepository blogPostRepository;
 
         [BindProperty]
         public AddBlogPost AddBlogPostRequest { get; set; }
 
-        public AddModel(BlogDbContext blogDbContext)
+        public AddModel(IBlogPostRepository blogPostRepository)
         {
-            this.blogDbContext = blogDbContext;
+           
+            this.blogPostRepository = blogPostRepository;
         }
 
         public void OnGet()
         {
         }
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPost()
         {
             var blogPost = new BlogPost()
             {
@@ -35,8 +38,15 @@ namespace Blog.Web.Pages.Admin.Posty
                 Author = AddBlogPostRequest.Author,
                 Visible = AddBlogPostRequest.Visible
             };
-            blogDbContext.BlogPosts.Add(blogPost);
-            blogDbContext.SaveChanges();
+            await blogPostRepository.AddAsync(blogPost);
+
+            var alert = new Alerts
+            {
+                Type = Enums.AlertType.Success,
+                Message = "Poprawnie utworzono nowy post!"
+            };
+
+           TempData ["Alert"] = JsonSerializer.Serialize(alert);
 
             return RedirectToPage("/Admin/Posty/List");
         }

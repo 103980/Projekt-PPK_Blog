@@ -1,0 +1,36 @@
+﻿@using Blog.Web.Models.ViewModels
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@{
+    var alert = (Alerts)ViewData["Alert"];
+    if (alert != null)
+    {
+        var alertClass = "";
+        switch (alert.Type)
+        {
+            case Enums.AlertType.Success:
+                alertClass = "alert-success";
+                break;
+            case Enums.AlertType.Info:
+                alertClass = "alert-secondary";
+                break;
+            case Enums.AlertType.Error:
+                alertClass = "alert-danger";
+                break;
+            default:
+                alertClass = "";
+                break;
+        }
+
+        <div class="container my-5">
+            <div class="alert @alertClass alert-dismissible fade show mb-3" role="alert">
+                @Html.Raw(alert.Message)
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    }
+}
