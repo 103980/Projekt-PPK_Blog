@@ -15,6 +15,9 @@ namespace Blog.Web.Pages.Admin.Posty
         [BindProperty]
         public AddBlogPost AddBlogPostRequest { get; set; }
 
+        [BindProperty]
+        public IFormFile FeaturedImage { get; set; }
+
         public AddModel(IBlogPostRepository blogPostRepository)
         {
            

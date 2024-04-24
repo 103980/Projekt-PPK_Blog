@@ -30,14 +30,15 @@ namespace Blog.Web.Pages.Admin.Posty
         {
             try
             {
-                throw new Exception();
+                //throw new Exception();
 
                 await blogPostRepository.UpdateAsync(BlogPost);
 
                 ViewData["Alert"] = new Alerts
                 {
-                    Message = "Post zosta³ poprawnie zmodyfikowany!",
-                    Type = Enums.AlertType.Success
+                    Type = Enums.AlertType.Success,
+                    Message = "Post zosta³ poprawnie zmodyfikowany!"
+                    
                 };
             }
             catch (Exception ex)
