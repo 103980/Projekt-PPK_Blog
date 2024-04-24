@@ -1,0 +1,32 @@
+﻿@page "/blogs/{urlHandle}"
+@model Blog.Web.Pages.Blogs.DetailsModel
+@{
+    ViewData["Title"] = Model.BlogPost.PageTitle;
+}
+
+<div class="container my-3">
+    <div class="row justify-content-center">
+    <div class="col-12 col-lg-6">
+            @if (Model.BlogPost != null)
+            {
+                <h2 class="mb-3">@Model.BlogPost.Heading</h2>
+                <div class="d-flex justify-content-between">
+                    <span class="text-secondary">@Model.BlogPost.Author</span>
+                    <span class="text-secondary">@Model.BlogPost.PublishedDate.ToShortDateString()</span>
+                </div>
+                <img src="@Model.BlogPost.FeaturedImageUrl" class="d-block img-fluid mb-3"/>
+                
+                <div class="mb-3" blog-details>
+                    @Html.Raw(Model.BlogPost.Content)
+                </div>
+             
+            }
+            else
+            {
+                <h3>Coś poszło nie tak.</h3>
+            }
+
+
+        </div>
+    </div>
+</div>
