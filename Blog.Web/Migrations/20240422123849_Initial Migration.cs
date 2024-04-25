@@ -11,6 +11,11 @@ namespace Blog.Web.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+
+
+           // Zakomentować wszystko w metodzie UP przed updatem DB
+
+
             migrationBuilder.CreateTable(
                 name: "BlogPosts",
                 columns: table => new
