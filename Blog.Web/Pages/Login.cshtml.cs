@@ -21,26 +21,32 @@ namespace Blog.Web.Pages
         {
         }
 
-        public async Task<IActionResult> OnPost(string ReturnUrl)
+        public async Task<IActionResult> OnPost(string? ReturnUrl)
         {
-            var SignInResult = await signInManager.PasswordSignInAsync(LoginViewModel.UserName, LoginViewModel.Password, false, false);
 
-            if (SignInResult.Succeeded)
-            {
-                if (!string.IsNullOrWhiteSpace(ReturnUrl)) {
-                return RedirectToPage(ReturnUrl);
-                }
-                return RedirectToPage("Index");
-            }
-            else
-            {
-                ViewData["Alert"] = new Alerts
+            if (ModelState.IsValid) {
+
+                var SignInResult = await signInManager.PasswordSignInAsync(LoginViewModel.UserName, LoginViewModel.Password, false, false);
+
+                if (SignInResult.Succeeded)
                 {
-                    Type = Enums.AlertType.Error,
-                    Message = "Niepoprawne dane logowania."
-                };
-                return Page();
+                    if (!string.IsNullOrWhiteSpace(ReturnUrl))
+                    {
+                        return RedirectToPage(ReturnUrl);
+                    }
+                    return RedirectToPage("Index");
+                }
+                else
+                {
+                    ViewData["Alert"] = new Alerts
+                    {
+                        Type = Enums.AlertType.Error,
+                        Message = "Niepoprawne dane logowania."
+                    };
+                    return Page();
+                }
             }
+            return Page();
         }
     }
 }

@@ -70,14 +70,17 @@
                 <div class="mb-2">
                     <label class="form-label"> Nazwa </label>
                         <input type="text" class="form-control" asp-for="AddUserRequest.Username" />
+                        <span class="text-danger" asp-validation-for="AddUserRequest.Username"></span>
                 </div>
                 <div class="mb-2">
                     <label class="form-label"> Email </label>
                         <input type="email" class="form-control" asp-for="AddUserRequest.Email" />
+                        <span class="text-danger" asp-validation-for="AddUserRequest.Email"></span>
                 </div>
                 <div class="mb-2">
                     <label class="form-label"> Hasło </label>
                         <input type="password" class="form-control" asp-for="AddUserRequest.Password" />
+                        <span class="text-danger" asp-validation-for="AddUserRequest.Password"></span>
                 </div>
                 <div class="mb-2">
                     <div class="form-check">
