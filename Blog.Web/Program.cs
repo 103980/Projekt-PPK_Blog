@@ -18,11 +18,12 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkSto
 builder.Services.Configure<IdentityOptions>(options =>
 {
     options.Password.RequireDigit = false;
+    options.Password.RequiredLength = 2;
+    options.Password.RequiredUniqueChars = 0;
     options.Password.RequireLowercase = false;
     options.Password.RequireNonAlphanumeric = false;
     options.Password.RequireUppercase = false;
-    options.Password.RequiredLength = 5;
-    options.Password.RequiredUniqueChars = 0;
+    
 });
 
 
@@ -40,6 +41,7 @@ builder.Services.AddScoped<IImageRepository, ImageRepositoryCloud>();
 //ITagRepository - niedokoñczone
 builder.Services.AddScoped<IBlogPostLikeRepository, BlogPostLikeRepository>();
 builder.Services.AddScoped<IBlogPostCommentRepository, BlogPostCommentRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 var app = builder.Build(); 
 
