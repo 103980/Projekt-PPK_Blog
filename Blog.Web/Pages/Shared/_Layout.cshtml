@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> signInManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -12,17 +15,24 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-dark border-bottom box-shadow mb-1">
+
+            
+
             <div class="container">
-                <a class="navbar-brand text-light" asp-area="" asp-page="/Index">Blog.Web</a>
+                <a class="navbar-brand text-light" asp-area="" asp-page="/Index"><img src="\logo\logo.png" height="50" class="rounded mx-auto d-block" /></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-page="/Index">Home</a>
                         </li>
+
+                        @if(signInManager.IsSignedIn(User)&& User.IsInRole("Admin")){
+                            
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" id="navbarDropdownAdmin">
                                 Admin
@@ -36,7 +46,21 @@
                                 </li>
                             </ul>
                         </li>
+                        }
                     </ul>
+                    <div class="d-flex align-items-center">
+                        @if (signInManager.IsSignedIn(User))
+                        {
+                            <div class="me-2 text-light">
+                                <p> Witaj @User?.Identity?.Name</p>
+                                </div>
+                            <a href="/logout" class="btn bg-light text-dark me-2">Wyloguj</a>
+                        }else{
+                            <a href="/login" class="btn bg-light text-dark me-2">Zaloguj</a>
+                            <a href="/register" class="btn bg-light text-dark me-2">Zarejestruj</a>
+                        }
+
+                    </div>
                 </div>
             </div>
         </nav>

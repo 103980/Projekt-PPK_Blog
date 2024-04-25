@@ -9,6 +9,7 @@ using System.Text.Json;
 
 namespace Blog.Web.Pages.Admin.Posty
 {
+    //Dla sprawdzenia nie dodaje autoryzacji ¿eby móc wejœæ przez URL "localhost/Admin/Posty/List"
     public class ListModel : PageModel
     {
         private readonly IBlogPostRepository blogPostRepository;
